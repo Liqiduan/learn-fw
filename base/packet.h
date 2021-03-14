@@ -5,7 +5,7 @@
 
 #include "protocol.h"
 
-typedef struct{
+typedef struct {
     uint16_t size;
     uint16_t offset;
     uint16_t length;

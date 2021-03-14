@@ -4,13 +4,16 @@
 #include "packet.h"
 #include "table_interface.h"
 
-typedef void (*EngineRx)(TableInterfaceKey interface, Packet* packet);
-typedef void (*EngineTx)(TableInterfaceKey interface, Packet* packet);
-typedef void (*EngineTxRegister)(EngineTx tx);
+typedef enum {
+    ENGINE_STATUS_BUSY,
+    ENGINE_STATUS_IDLE
+} EngineStatus;
 
-typedef struct {
-    EngineRx rx;
-    EngineTxRegister registerTx;
-} Engine;
+typedef Packet* (*EngineRx)(TableInterfaceKey interface);
+typedef void (*EngineTx)(TableInterfaceKey interface, Packet* packet);
+
+EngineStatus EnginePoll();
+void EngineRegisterRx(EngineRx rx);
+void EngineRegisterTx(EngineTx tx);
 
 #endif
